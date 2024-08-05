@@ -17,4 +17,9 @@ public class EmployeesResource implements EmployeesApi {
     public List<EmployeeDto> listEmployees() {
         return employeesService.listEmployees();
     }
+
+    @Override
+    public EmployeeDto findEmployeeById(Long id) {
+        return employeesService.findEmployeeById(id);
+    }
 }
