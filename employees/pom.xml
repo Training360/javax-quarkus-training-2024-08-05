@@ -45,6 +45,10 @@
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-hibernate-validator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5</artifactId>
             <scope>test</scope>
         </dependency>
@@ -128,7 +132,7 @@
                                 <interfaceOnly>true</interfaceOnly>
                                 <useTags>true</useTags>
                                 <useJakartaEe>true</useJakartaEe>
-                                <returnResponse>true</returnResponse>
+<!--                                <returnResponse>true</returnResponse>-->
                             </configOptions>
                             <apiPackage>training.api</apiPackage>
                             <modelPackage>training.dto</modelPackage>
