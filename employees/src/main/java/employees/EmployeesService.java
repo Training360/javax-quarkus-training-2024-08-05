@@ -37,4 +37,10 @@ public class EmployeesService {
                 .map(EmployeesService::toDto)
                 .orElseThrow(() -> new NotFoundException("Employee not found with id " + id, Employee.class, id));
     }
+
+    public EmployeeDto createEmployee(EmployeeDto employeeDto) {
+        var entity = new Employee(sequence.incrementAndGet(), employeeDto.getName());
+        employees.add(entity);
+        return toDto(entity);
+    }
 }

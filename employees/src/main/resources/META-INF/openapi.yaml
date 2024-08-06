@@ -28,6 +28,23 @@ paths:
                     name: John Doe
                   - id: 2
                     name: Jane Doe
+    post:
+      summary: Create employee
+      operationId: createEmployee
+      tags:
+        - employees
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Employee"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
   /api/employees/{id}:
     get:
       operationId: findEmployeeById
@@ -47,6 +64,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Employee"
+        404:
+          description: Not found
 
 components:
   schemas:
