@@ -1,5 +1,6 @@
 ### List employees
 GET http://localhost:8080/api/employees
+Request-Id: {{$random.uuid}}
 
 ### Find employee by id
 GET http://localhost:8080/api/employees/2

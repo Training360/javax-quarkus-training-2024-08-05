@@ -1,5 +1,7 @@
 package employees;
 
+import io.quarkus.logging.Log;
+import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.core.Response;
 import training.api.EmployeesApi;
 import training.dto.EmployeeDto;
@@ -15,7 +17,8 @@ public class EmployeesResource implements EmployeesApi {
     }
 
     @Override
-    public Response listEmployees() {
+    public Response listEmployees(@HeaderParam("Request-Id") String requestId) {
+        Log.debugf("Request id: %s", requestId);
         return Response.ok(employeesService.listEmployees()).build();
     }
 
