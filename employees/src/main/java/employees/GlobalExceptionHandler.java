@@ -16,6 +16,8 @@ public class GlobalExceptionHandler {
                         .withType(URI.create("errors/not-found"))
                         .withStatus(Response.Status.NOT_FOUND)
                         .withDetail(notFoundException.getMessage())
+                        .with("class", notFoundException.getClazz().getName())
+                        .with("id", notFoundException.getId())
                         .build()
         )
                 .header("Content-Type", "application/problem+json")
