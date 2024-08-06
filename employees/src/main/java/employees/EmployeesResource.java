@@ -29,4 +29,19 @@ public class EmployeesResource implements EmployeesApi {
         var created = employeesService.createEmployee(employeeDto);
         return Response.created(URI.create("/api/employees/%d".formatted(created.getId()))).entity(created).build();
     }
+
+    @Override
+    public Response updateEmployee(Long id, EmployeeDto employeeDto) {
+        if (!id.equals(employeeDto.getId())) {
+            throw new IllegalArgumentException("Ids must be the same %d != %d".formatted(id, employeeDto.getId()));
+        }
+        return Response.ok(employeesService.updateEmployee(employeeDto)).build();
+    }
+
+    // ModifyEmployeeCommand - String name
+    // {"name": null}
+    // ModifyEmployeeCommand nem akarom
+    // {"name": "John Doe"}
+    // csak a módosítandókat akarom beküldeni?
+    // PATCH
 }

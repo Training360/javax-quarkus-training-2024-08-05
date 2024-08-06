@@ -14,3 +14,12 @@ Content-Type: application/json
 {
   "name": "John Doe"
 }
+
+### Create employee
+PUT http://localhost:8080/api/employees/5
+Content-Type: application/json
+
+{
+  "id": 5,
+  "name": "Jack Doe"
+}
