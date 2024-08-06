@@ -44,4 +44,11 @@ public class EmployeesResource implements EmployeesApi {
     // {"name": "John Doe"}
     // csak a módosítandókat akarom beküldeni?
     // PATCH
+
+
+    @Override
+    public Response deleteEmployee(Long id) {
+        employeesService.deleteEmployee(id);
+        return Response.noContent().build();
+    }
 }

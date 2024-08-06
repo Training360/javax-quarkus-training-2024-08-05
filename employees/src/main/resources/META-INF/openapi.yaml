@@ -91,7 +91,20 @@ paths:
                 $ref: "#/components/schemas/Employee"
         404:
           description: Not found
-
+    delete:
+      operationId: deleteEmployee
+      tags:
+        - employees
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        204:
+          description: No Content
 components:
   schemas:
     Employee:

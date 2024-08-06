@@ -57,4 +57,8 @@ public class EmployeesService {
     public static Supplier<NotFoundException> notFound(long id) {
         return () -> new NotFoundException("Employee not found with id " + id, Employee.class, id);
     }
+
+    public void deleteEmployee(Long id) {
+        employees.removeIf(e -> e.getId().equals(id));
+    }
 }
