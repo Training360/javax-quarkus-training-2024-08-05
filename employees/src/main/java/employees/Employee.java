@@ -6,6 +6,8 @@ public class Employee {
 
     private String name;
 
+    private EmployeeStatus employeeStatus = EmployeeStatus.ACTIVE;
+
     public Employee(Long id, String name) {
         this.id = id;
         this.name = name;
@@ -25,5 +27,13 @@ public class Employee {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public EmployeeStatus getEmployeeStatus() {
+        return employeeStatus;
+    }
+
+    public void setEmployeeStatus(EmployeeStatus employeeStatus) {
+        this.employeeStatus = employeeStatus;
     }
 }

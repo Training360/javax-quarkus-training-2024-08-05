@@ -41,6 +41,13 @@ public class EmployeesService {
     }
 
     public EmployeeDto createEmployee(EmployeeDto employeeDto) {
+        var existingEmployeeWithName = employees.stream()
+                .filter(employee -> employee.getName().equals(employeeDto.getName()))
+                .findAny();
+        if (existingEmployeeWithName.isPresent()) {
+            throw new IllegalArgumentException("Employee with name %s already exists".formatted(employeeDto.getName()));
+        }
+
         var entity = new Employee(sequence.incrementAndGet(), employeeDto.getName());
         employees.add(entity);
         return toDto(entity);
@@ -61,5 +68,9 @@ public class EmployeesService {
 
     public void deleteEmployee(Long id) {
         employees.removeIf(e -> e.getId().equals(id));
+    }
+
+    public void clearAll() {
+        employees.clear();
     }
 }
