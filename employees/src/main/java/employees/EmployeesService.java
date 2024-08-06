@@ -25,8 +25,9 @@ public class EmployeesService {
         return new EmployeeDto().id(entity.getId()).name(entity.getName());
     }
 
-    public List<EmployeeDto> listEmployees() {
+    public List<EmployeeDto> listEmployees(String prefix) {
         return employees.stream()
+                .filter(employee -> prefix == null || employee.getName().startsWith(prefix))
                 .map(EmployeesService::toDto)
                 .toList();
     }
@@ -54,8 +55,8 @@ public class EmployeesService {
                 .orElseThrow(notFound(employeeDto.getId()));
     }
 
-    public static Supplier<NotFoundException> notFound(long id) {
-        return () -> new NotFoundException("Employee not found with id " + id, Employee.class, id);
+    public static Supplier<EntityNotFoundException> notFound(long id) {
+        return () -> new EntityNotFoundException("Employee not found with id " + id, Employee.class, id);
     }
 
     public void deleteEmployee(Long id) {
