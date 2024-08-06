@@ -47,6 +47,13 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-hibernate-validator</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.tietoevry.quarkus</groupId>
+            <artifactId>quarkus-resteasy-problem</artifactId>
+            <version>3.9.0</version>
+        </dependency>
+
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-openapi</artifactId>
@@ -136,7 +143,7 @@
                                 <interfaceOnly>true</interfaceOnly>
                                 <useTags>true</useTags>
                                 <useJakartaEe>true</useJakartaEe>
-<!--                                <returnResponse>true</returnResponse>-->
+                                <returnResponse>true</returnResponse>
                             </configOptions>
                             <apiPackage>training.api</apiPackage>
                             <modelPackage>training.dto</modelPackage>

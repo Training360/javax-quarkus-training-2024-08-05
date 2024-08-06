@@ -1,9 +1,7 @@
 package employees;
 
+import jakarta.ws.rs.core.Response;
 import training.api.EmployeesApi;
-import training.dto.EmployeeDto;
-
-import java.util.List;
 
 public class EmployeesResource implements EmployeesApi {
 
@@ -14,12 +12,12 @@ public class EmployeesResource implements EmployeesApi {
     }
 
     @Override
-    public List<EmployeeDto> listEmployees() {
-        return employeesService.listEmployees();
+    public Response listEmployees() {
+        return Response.ok(employeesService.listEmployees()).build();
     }
 
     @Override
-    public EmployeeDto findEmployeeById(Long id) {
-        return employeesService.findEmployeeById(id);
+    public Response findEmployeeById(Long id) {
+        return Response.ok(employeesService.findEmployeeById(id)).build();
     }
 }

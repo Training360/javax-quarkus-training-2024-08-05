@@ -35,6 +35,6 @@ public class EmployeesService {
                 .filter(employee -> employee.getId().equals(id))
                 .findAny()
                 .map(EmployeesService::toDto)
-                .orElseThrow(() -> new IllegalArgumentException("Employee not found  + id"));
+                .orElseThrow(() -> new NotFoundException("Employee not found with id " + id));
     }
 }
