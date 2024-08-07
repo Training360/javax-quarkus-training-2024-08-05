@@ -1,16 +1,19 @@
 package employees;
 
 import io.quarkus.test.InjectMock;
+import io.quarkus.test.TestTransaction;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.common.mapper.TypeRef;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import training.dto.EmployeeDto;
 
 import java.util.List;
+import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,22 +24,26 @@ import static org.mockito.Mockito.when;
 @QuarkusTest
 class EmployeeResourceTest {
 
-//    @Inject
-    @InjectMock
-    EmployeesService employeesService;
-
 //    @BeforeEach
 //    public void deleteAllEmployees() {
 //        employeesService.clearAll();
 //    }
 
+    @Inject
+    EmployeesRepository employeesRepository;
+
+    @BeforeEach
+    @Transactional
+    void deleteEmployees() {
+        employeesRepository.deleteAll();
+    }
+
     @Test
     void createEmployee() {
-        when(employeesService.createEmployee(any())).thenReturn(new EmployeeDto().id(1L).name("John Doe"));
-
+        var name = "John Doe " + UUID.randomUUID();
         var response = given()
                 .contentType(ContentType.JSON)
-                .body(new EmployeeDto().name("John Doe"))
+                .body(new EmployeeDto().name(name))
                 .when()
                 .post("/api/employees")
                 .then()
@@ -44,17 +51,13 @@ class EmployeeResourceTest {
                 .extract().body().as(EmployeeDto.class);
 
         assertNotNull(response.getId());
-        assertEquals("John Doe", response.getName());
+        assertEquals(name, response.getName());
     }
 
     @Test
     void listEmployees() {
-        when(employeesService.listEmployees(any())).thenReturn(
-                List.of(
-                        new EmployeeDto().id(1L).name("John Doe"),
-                        new EmployeeDto().id(2L).name("Jane Doe")
-                )
-        );
+
+        createEmployees();
 
         List<EmployeeDto> employees = given()
                 .when()
@@ -72,6 +75,10 @@ class EmployeeResourceTest {
         assertThat(employees)
                 .extracting(EmployeeDto::getName)
                 .containsExactly("John Doe", "Jane Doe");
+    }
 
+    @Transactional
+    void createEmployees() {
+        employeesRepository.persist(new Employee("John Doe"), new Employee("Jane Doe"));
     }
 }
