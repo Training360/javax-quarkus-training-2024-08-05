@@ -1,7 +1,9 @@
 package employees;
 
+import io.smallrye.reactive.messaging.MutinyEmitter;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+import org.eclipse.microprofile.reactive.messaging.Channel;
 import training.dto.EmployeeDto;
 
 import java.util.ArrayList;
@@ -13,10 +15,15 @@ import java.util.function.Supplier;
 @ApplicationScoped
 public class EmployeesService {
 
-    private EmployeesRepository employeesRepository;
+    private final EmployeesRepository employeesRepository;
 
-    public EmployeesService(EmployeesRepository employeesRepository) {
+    private final MutinyEmitter<EmployeeHasBeenCreatedEvent> eventEmitter;
+
+    public EmployeesService(EmployeesRepository employeesRepository,
+                            @Channel("employees-events")
+                            MutinyEmitter<EmployeeHasBeenCreatedEvent> eventEmitter) {
         this.employeesRepository = employeesRepository;
+        this.eventEmitter = eventEmitter;
     }
 
     private static EmployeeDto toDto(Employee entity) {
@@ -44,6 +51,10 @@ public class EmployeesService {
 
         var entity = new Employee(employeeDto.getName());
         employeesRepository.persist(entity);
+
+        eventEmitter
+                .sendAndAwait(new EmployeeHasBeenCreatedEvent("Employee with name %s created".formatted(employeeDto.getName())));
+
         return toDto(entity);
     }
 
