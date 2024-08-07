@@ -47,3 +47,9 @@ Content-Type: application/json
 {
   "title": "quarkus in 3 days"
 }
+
+### Find all dogs
+GET http://localhost:8080/api/dogs
+
+### Find dog by id
+GET http://localhost:8080/api/dogs/1
