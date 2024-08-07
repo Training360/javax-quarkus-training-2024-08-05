@@ -1,12 +1,27 @@
 package employees;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Employee {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     private String name;
 
     private EmployeeStatus employeeStatus = EmployeeStatus.ACTIVE;
+
+    public Employee() {
+    }
+
+    public Employee(String name) {
+        this.name = name;
+    }
 
     public Employee(Long id, String name) {
         this.id = id;

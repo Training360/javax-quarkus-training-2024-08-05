@@ -28,12 +28,12 @@ Content-Type: application/json
   "name": "john doe"
 }
 
-### Create employee
-PUT http://localhost:8080/api/employees/5
+### Update employee
+PUT http://localhost:8080/api/employees/1
 Content-Type: application/json
 
 {
-  "id": 5,
+  "id": 1,
   "name": "Jack Doe"
 }
 

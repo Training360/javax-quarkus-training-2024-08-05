@@ -6,6 +6,7 @@ import training.dto.EmployeeDto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 
 class EmployeesServiceTest {
 
@@ -13,7 +14,8 @@ class EmployeesServiceTest {
 
     @BeforeEach
     void createEmployeeService() {
-        employeesService = new EmployeesService();
+        var employeesRepository = mock(EmployeesRepository.class);
+        employeesService = new EmployeesService(employeesRepository);
     }
 
     @Test
