@@ -24,7 +24,7 @@ public class EmployeesService {
     }
 
     public List<EmployeeDto> listEmployees(String prefix) {
-        return employeesRepository.findAll().stream()
+        return employeesRepository.findEmployeesByPrefix(prefix)
                 .map(EmployeesService::toDto)
                 .toList();
     }
@@ -37,13 +37,10 @@ public class EmployeesService {
 
     @Transactional
     public EmployeeDto createEmployee(EmployeeDto employeeDto) {
-        // TODO
-//        var existingEmployeeWithName = employees.stream()
-//                .filter(employee -> employee.getName().equals(employeeDto.getName()))
-//                .findAny();
-//        if (existingEmployeeWithName.isPresent()) {
-//            throw new IllegalArgumentException("Employee with name %s already exists".formatted(employeeDto.getName()));
-//        }
+        var existingEmployeeWithName = employeesRepository.findEmployeeByName(employeeDto.getName());
+        if (existingEmployeeWithName.isPresent()) {
+            throw new IllegalArgumentException("Employee with name %s already exists".formatted(employeeDto.getName()));
+        }
 
         var entity = new Employee(employeeDto.getName());
         employeesRepository.persist(entity);
